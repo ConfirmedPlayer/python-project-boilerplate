@@ -1,0 +1,16 @@
+services:
+  server:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - ./src:/app
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    command:
+      - "sh"
+      - "-c"
+      - |
+        python main.py

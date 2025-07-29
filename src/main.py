@@ -1,6 +1,7 @@
 import asyncio
-from tools.http import SingleAiohttpClient
+
 from core.logging import configure_logging
+from tools.http import SingleAiohttpClient
 
 
 async def main():

@@ -1,9 +1,12 @@
 import asyncio
+import sys
 from typing import Any
 
 from aiogram.exceptions import TelegramRetryAfter
+from loguru import logger
 
-from core.config import env, logger_bot
+from core.config import logger_bot
+from core.env import env
 
 lock = asyncio.Lock()
 
@@ -38,3 +41,13 @@ async def log_to_telegram_bot(
             await send_message_to_admins_chat(message)
     else:
         await send_message_to_admins_chat(log)
+
+
+def configure_logging() -> None:
+    logger.remove(0)
+
+    logger.add(sink=sys.stderr)
+
+    logger.add(sink='logs.log', rotation='500 MB')
+
+    logger.add(sink=log_to_telegram_bot, format=env.TELEGRAM_LOGGER_FORMAT)

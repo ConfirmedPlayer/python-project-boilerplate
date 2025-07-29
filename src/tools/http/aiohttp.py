@@ -47,11 +47,11 @@ class AiohttpClient(ABCHTTPClient):
         return response._body
 
     async def close(self) -> None:
-        if self.session and not self.session.closed:
+        if hasattr(self, 'session') and not self.session.closed:
             await self.session.close()
 
     def __del__(self) -> None:
-        if self.session and not self.session.closed:
+        if hasattr(self, 'session') and not self.session.closed:
             if (
                 self.session._connector is not None
                 and self.session._connector_owner

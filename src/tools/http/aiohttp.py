@@ -12,7 +12,7 @@ class AiohttpClient(ABCHTTPClient):
     async def request_raw(
         self, url: str, method: str = 'GET', data: dict | None = None, **kwargs
     ) -> ClientResponse:
-        if not self.session:
+        if not hasattr(self, 'session'):
             self.session = ClientSession(
                 json_serialize=self.json_processing_module.dumps,
                 **self._session_params,
